@@ -35,5 +35,3 @@ def Maquina():
                 print("Te falta $",Precio-Pago,"no puedes hacer la compra")
       
 Menu()
-
-PRINT("JKDHS")
