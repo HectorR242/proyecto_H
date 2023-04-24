@@ -75,21 +75,10 @@ def Verificacion():
     Contador=0
     while True:
         print("Antes de acceder a la configuración, confirme que es el propietario de la máquina.")
-        Usuario = input("Digite su usuario: ")
+        Usuario1 = input("Digite su usuario: ")
         Contraseña1 = int(input("Digite su contraseña: "))
-        if Usuario in Usuario:
-            if Contraseña1 == Contraseña["2"]:
-                Configuracion()
-            else:
-                print("El nombre de usuario o la contraseña son incorrectos")
-                Contador+=1
-                print("Intentos disponibles: 3")
-                print(Contador)
-                if Contador==3:
-                    print("-----------------------------------------------------------------------------------------------------------------")
-                    return Menu()
-                else:
-                    print("")
+        if Usuario1 == Usuario["1"] and Contraseña1 == Contraseña["2"]:
+            Configuracion()
         else:
             print("El nombre de usuario o la contraseña son incorrectos")
             Contador+=1
@@ -102,24 +91,27 @@ def Verificacion():
                 print("")
 
 def Administrador():
-    Verificacion=int(input("Confirmar la contraseña actual: "))
-    if Verificacion == Contraseña["2"]:
-        UsuarioN=input("Ingrese su nuevo nombre de usuario: ")
-        Nueva=input("Ingrese su nueva contraseña: ")
-        if  Usuario["1"]==UsuarioN:
-            print("Error")
-        elif Contraseña["2"]==Nueva:
-            print("Error")
-        else:
+    while True:
+        Verificacion=int(input("Confirmar la contraseña actual: "))
+        if Verificacion == Contraseña["2"]:
+            UsuarioN=input("Ingrese su nuevo nombre de usuario: ")
+            Nueva=int(input("Ingrese su nueva contraseña: "))
             Usuario["1"]=UsuarioN
             Contraseña["2"]=Nueva
-            print("Su nombre de usuario y su contraseña a sido cambiada exictosamente")
-            print(Usuario)
-            print(Contraseña)
-    else: 
-        print("error")
+            print("Su nombre de usuario y su contraseña a sido cambiada exictosamente")   
+        else: 
+            print("Error, contraseña incorrecta")
+            Contador+=1
+            print("Intentos disponibles: 3")
+            print(Contador)
+            if Contador==3:
+                print("-----------------------------------------------------------------------------------------------------------------")
+                return Menu()
+            else:
+                print("")
 
 def Opciones():
+    Contador=0
     while True:
         try:
             print("-----------------------------------------------------------------------------------------------------------------")
@@ -146,9 +138,16 @@ def Opciones():
                 else:
                     print("Te falta $",Precio-Pago,"no puedes hacer la compra")
             else:
-                print("Error")
+                print("Error, producto no encontrado")
+                Contador+=1
+                print("Intentos disponibles: 3")
+                print(Contador)
+                if Contador==3:
+                    return Menu()
+                    print("-----------------------------------------------------------------------------------------------------------------")
+                else:
+                    print("")
             print("-----------------------------------------------------------------------------------------------------------------")
-            return Menu()
 
         except ValueError:
             print("-----------------------------------------------------------------------------------------------------------------")
