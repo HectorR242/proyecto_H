@@ -82,6 +82,7 @@ def validar_usuario(Admin_Lista:list):
         else:
             return Admin, 1
     return False, 0
+    administrador(Admin_Lista)
 
 def Seguridad():
     while (True):
@@ -128,24 +129,55 @@ def Opciones():
             print("Intentalo De Nuevo")
 
 def Configuracion():
-    print("-----------------------------------------------------------------------------------------------------------------")
-    print("*****CONFIGURACION DE LA MAQUINA*****")
-    print("Seleccione Menu:")
-    print("""\n\t 1.Cambiar Productos\n\t 2.Cambiar Precios\n\t 3.Temperatura\n\t 4.Salir
-    """)
-    Opciones = input("Seleccione: ")
-    if Opciones=="1":
-        Producto()
-    elif Opciones=="2":
-        Precio()
+    while True:
+        try:
+            print("-----------------------------------------------------------------------------------------------------------------")
+            print("*****CONFIGURACION DE LA MAQUINA*****")
+            print("Seleccione Menu:")
+            print("""\n\t 1.Cambiar Productos\n\t 2.Cambiar Precios\n\t 3.Temperatura\n\t 4.Cambiar administrador\n\t 5.Salir
+            """)
+            Opciones = int(input("Seleccione: "))
+            if Opciones==1:
+                Producto()
+            elif Opciones==2:
+                Precio()
+            elif Opciones==3:
+                Temperatura()
+            elif Opciones==4:
+                administrador()
+            elif Opciones==5:
+                return Menu()
+        except ValueError:
+            print("Error, el dato solo puede ser tipo numerico ✘")
+            Contador+=1
+            print("Intentos disponibles: 3")
+            print(Contador)
+            if Contador==3:
+                print("-----------------------------------------------------------------------------------------------------------------")
+                return Menu()
+            else:
+                print("")
+def administrador(Admin_Lista):
+    Verificacion=int(input("Confirmar la contraseña actual: "))
+    if Verificacion != Admin_Lista[1]:
+        print("error")
+    elif Verificacion == Admin_Lista[1]:
+        Nueva=input("Ingrese su nueva contraseña: ")
+        if Admin_Lista[1]==Nueva:
+            print("Error")
+        else:
+            Admin_Lista[1]=Nueva
+            print("Su contraseña a sido cambiada exictosamente")
+            print(Admin_Lista)
 
 def Producto():
+    Contador=0
     while True:
         print("-----------------------------------------------------------------------------------------------------------------")
         print("Seleccione el código del producto y luego agregue el nombre que desea cambiar correspondiente al producto que eligió: ")
         print("Ejemplo: \n\t 1.Codigo = A1 ✔ \n\t 2.Nombre = Galletas Noel ✔ ")
         print("-----------------------------------------------------------------------------------------------------------------")
-        Posiciones=["A1=0","A2=1","A3=2","A4=3","A5=4","A6=5","A7=6","A8=7","A9=8","A10=9","A11=10","A12=11","A13=12","A14=13","A15=14","A16=15","A17=16","A18=17","A19=18","A20=19"]
+        Posiciones=["A1=0","A2=1","A3=2","A4=3","A5=4","A6=5","A7=6","A8=7","A9=8","A10=9","A11=10","A12=11","A13=12","A14=13","A15=14","A16=15","A17=16","A18=17","A19=18","A20=19","A21=20","A22=21","A23=22","A24=23","A25=24","A26=25","A27=26","A28=27","A29=28","A30=29","A31=30","A32=31","A33=32","A34=33","A35=34","A36=35","A37=36","A38=37","A39=38","A40=39"]
         print("Lista De Los Codigos: ")
         for i in Posiciones:
             print("————————————————")
@@ -153,18 +185,41 @@ def Producto():
             print("————————————————")
         print("-----------------------------------------------------------------------------------------------------------------")
         Codigo = input("Digite el codigo del producto: ")
-        Cambio = input("Nombre su producto: ")
-        Máquina_Expendedora[Codigo] = Cambio + ":" + " Precio: "
-        Opciones()
+        if Máquina_Expendedora.get(Codigo):
+            Cambio = input("Nombre su producto: ")
+            if Cambio.isalnum()== False:    
+                Máquina_Expendedora[Codigo] = Cambio + ":" + " Precio: "
+                Opciones()
+            else:
+                print("Error, el dato solo puede ser tipo texto ✘")
+                Contador+=1
+                print("Intentos disponibles: 3")
+                print(Contador)
+                if Contador==3:
+                    print("-----------------------------------------------------------------------------------------------------------------")
+                    return Menu()
+                else:
+                    print("")
+        else:
+            print("Error, la clave no existe")
+            Contador+=1
+            print("Intentos disponibles: 3")
+            print(Contador)
+            if Contador==3:
+                print("-----------------------------------------------------------------------------------------------------------------")
+                return Menu()
+            else:
+                print("")
 
 def Precio():
+    Contador=0
     while True:
         try:
             print("-----------------------------------------------------------------------------------------------------------------")
             print("Seleccione el codigo del producto y agregue su numero correspondiente para hacer el cambio del precio: ")
             print("Ejemplo: \n\t 1.Codigo = A1 ✔ \n\t 2.Numero = 0 ✔ ")
             print("-----------------------------------------------------------------------------------------------------------------")
-            Posiciones=["A1=0","A2=1","A3=2","A4=3","A5=4","A6=5","A7=6","A8=7","A9=8","A10=9","A11=10","A12=11","A13=12","A14=13","A15=14","A16=15","A17=16","A18=17","A19=18","A20=19"]
+            Posiciones=["A1=0","A2=1","A3=2","A4=3","A5=4","A6=5","A7=6","A8=7","A9=8","A10=9","A11=10","A12=11","A13=12","A14=13","A15=14","A16=15","A17=16","A18=17","A19=18","A20=19","A21=20","A22=21","A23=22","A24=23","A25=24","A26=25","A27=26","A28=27","A29=28","A30=29","A31=30","A32=31","A33=32","A34=33","A35=34","A36=35","A37=36","A38=37","A39=38","A40=39"]
             print("Lista De Los Codigos: ")
             for i in Posiciones:
                 print("————————————————")
@@ -172,23 +227,51 @@ def Precio():
                 print("————————————————")
             print("-----------------------------------------------------------------------------------------------------------------")
             Codigo = input("Digite el codigo del producto: ")
-            if Codigo == Máquina_Expendedora:
+            if Máquina_Expendedora.get(Codigo):
                 Codigo2 =int(input("Digite el numero del producto: "))
                 Cambio = int(input("Coloquere el precio: "))
                 Cambio2 = input("Coloquere el precio: ")
-                Precios[Codigo2]=Cambio2
-                CopiaP[Codigo]=Cambio
-                CopiaM[Codigo]=Cambio2
-                Opciones()
-        except KeyError(Máquina_Expendedora):
+                if Cambio2.isalpha()== False:
+                    Precios[Codigo2]=Cambio2
+                    CopiaP[Codigo]=Cambio
+                    CopiaM[Codigo]=Cambio2
+                    Opciones()
+                else:
+                    print("Error, el dato solo puede ser tipo numerico ✘")
+                    Contador+=1
+                    print("Intentos disponibles: 3")
+                    print(Contador)
+                    if Contador==3:
+                        print("-----------------------------------------------------------------------------------------------------------------")
+                        return Menu()
+                    else:
+                        print("")
+            else:
+                print("Error, la clave no existe")
+                Contador+=1
+                print("Intentos disponibles: 3")
+                print(Contador)
+                if Contador==3:
+                    print("-----------------------------------------------------------------------------------------------------------------")
+                    return Menu()
+                else:
+                    print("")
+        except ValueError:
             print("Error, el dato solo puede ser tipo numerico ✘")
-            print("Intentalo De Nuevo")
+            Contador+=1
+            print("Intentos disponibles: 3")
+            print(Contador)
+            if Contador==3:
+                print("-----------------------------------------------------------------------------------------------------------------")
+                return Menu()
+            else:
+                print("")
 
 def Temperatura():
     pass
 
 if __name__ == "__main__":
-    Precio()
+    Menu()
 
  
 
