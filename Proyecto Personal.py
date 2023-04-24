@@ -2,7 +2,8 @@ from os import system
 system('cls')
 import time
 
-UsuarioAdministrado = ["Hec242", 2427]
+Usuario = {"1": "242"}
+Contraseña = {"2": 2427}
 Máquina_Expendedora = {"A1": "Papas Sabritas Sabor Pollo: Precio: ","A2": "Papas Sabritas Sabor BBQ: Precio: ","A3": "Doritos Nacho: Precio: ","A4": "Doritos Diablo: Precio: ","A5": "Choclitos Limon: Precio: ","A6": "Ponque Bimbo Chocoso: Precio: ","A7": "Ponque Vainilla Bimbo: Precio: ","A8": "Ponque Bimbo Submarino Arequipe: Precio: ","A9": "Ponque Bimbo Chocolate: Precio: ","A10": "Galleta Oreo: Precio: ","A11": "Galleta Festiva Chocolate: Precio: ","A12": "Galleta Festiva Vainilla: Precio: ","A13": "Galleta Festiva Limon: Precio: ","A14": "Galleta Festiva Recreo: Precio: ","A15": "Festiva MiniChips: Precio: ","A16": "Galleta Festiva Vainilla: Precio: ","A17": "Gaseosa Coca-Cola Personal: Precio: ","A18": "Gaseosa Pepsi Personal: Precio: ","A19": "Agua Cristal: Precio: ","A20": "PonyMalta: Precio: ","B21": "7UP: Precio: ","B22": "Fanta: Precio: ","B23": "Sprite: Precio: ","B24": "Tropical: Precio: ","B25": "Dr.Pepper: Precio: ","B26": "Postobon Manzana: Precio: ","B27": "Postobon Colombiana: Precio: ","B28": "Postobon Uva: Precio: ","B29": "Chocoramo: Precio: ","B30": "Chocoso: Precio: ","B31": "Bon Yurt Zucaritas: Precio: ","B32": "Bon Yurt Choco Crispis: Precio: ","B33": "Bon Yurt MiniChips: Precio: ","B34": "Bon Yurt Froot Loopso: Precio: ","B35": "Leche Alpina Chocolate: Precio: ","B36": "Leche Alpina Vainilla: Precio: ","B37": "Leche Alpina Fresa: Precio: ","B38": "DeTodito Paketon Original: Precio: ","B39": "DeTodito Paketon BBQ: Precio: ","B40": "DeTodito Paketon Mix: Precio: "}
 CopiaP = {"A1":3800,"A2": 1800,"A3": 2000,"A4": 2000,"A5": 800,"A6": 800,"A7": 800,"A8": 800,"A9": 800,"A10": 800,"A11": 800,"A12": 800,"A13": 800,"A14": 800,"A15": 1500,"A16": 800,"A17": 1800,"A18": 1800,"A19": 2500,"A20": 1500,"B21": 1800,"B22": 2000,"B23": 1800,"B24": 1500,"B25": 2000,"B26": 1800,"B27": 1800,"B28": 1800,"B29": 2500,"B30": 2300,"B31": 3500,"B32": 3500,"B33": 3500,"B34": 3500,"B35": 2500,"B36": 2500,"B37": 2500,"B38": 6500,"B39": 6500,"B40": 6500}
 CopiaM = {"A1":"3800","A2": "1800","A3": "2000","A4": "2000","A5": "800","A6": "800","A7": "800","A8": "800","A9": "800","A10": "800","A11": "800","A12": "800","A13": "800","A14": "800","A15": "1500","A16": "800","A17": "1800","A18": "1800","A19": "2500","A20": "1500","B21": "1800","B22": "2000","B23": "1800","B24": "1500","B25": "2000","B26": "1800","B27": "1800","B28": "1800","B29": "2500","B30": "2300","B31": "3500","B32": "3500","B33": "3500","B34": "3500","B35": "2500","B36": "2500","B37": "2500","B38": "6500","B39": "6500","B40": "6500"}
@@ -58,7 +59,7 @@ def Menu():
                 print("Cargando, Por Favor Espere....")
                 time.sleep(2)
                 system("cls")
-                Seguridad()
+                Verificacion()
             elif Menu1==3:
                 print("Apagando...")
                 time.sleep(2)
@@ -70,27 +71,53 @@ def Menu():
             print("Intentalo De Nuevo")
             print("-----------------------------------------------------------------------------------------------------------------")
 
-def validar_usuario(Admin_Lista:list):
-    Admin = False
-    print("Antes de acceder a la configuración, confirme que es el propietario de la máquina.")
-    Usuario = input("Digite su usuario: ")
-    Contraseña = int(input("Digite su contraseña: "))
-    if Usuario in Admin_Lista:
-        if Contraseña == Admin_Lista[1]:
-            Admin = True
-            return Admin, 1
+def Verificacion():
+    Contador=0
+    while True:
+        print("Antes de acceder a la configuración, confirme que es el propietario de la máquina.")
+        Usuario = input("Digite su usuario: ")
+        Contraseña1 = int(input("Digite su contraseña: "))
+        if Usuario in Usuario:
+            if Contraseña1 == Contraseña["2"]:
+                Configuracion()
+            else:
+                print("El nombre de usuario o la contraseña son incorrectos")
+                Contador+=1
+                print("Intentos disponibles: 3")
+                print(Contador)
+                if Contador==3:
+                    print("-----------------------------------------------------------------------------------------------------------------")
+                    return Menu()
+                else:
+                    print("")
         else:
-            return Admin, 1
-    return False, 0
-    administrador(Admin_Lista)
+            print("El nombre de usuario o la contraseña son incorrectos")
+            Contador+=1
+            print("Intentos disponibles: 3")
+            print(Contador)
+            if Contador==3:
+                print("-----------------------------------------------------------------------------------------------------------------")
+                return Menu()
+            else:
+                print("")
 
-def Seguridad():
-    while (True):
-        UsuarioDefinido, Roles = validar_usuario(UsuarioAdministrado)
-        if UsuarioDefinido == True and Roles == 1:
-            Configuracion()
+def Administrador():
+    Verificacion=int(input("Confirmar la contraseña actual: "))
+    if Verificacion == Contraseña["2"]:
+        UsuarioN=input("Ingrese su nuevo nombre de usuario: ")
+        Nueva=input("Ingrese su nueva contraseña: ")
+        if  Usuario["1"]==UsuarioN:
+            print("Error")
+        elif Contraseña["2"]==Nueva:
+            print("Error")
         else:
-            print ("Los datos no pudieron ser comprobados")
+            Usuario["1"]=UsuarioN
+            Contraseña["2"]=Nueva
+            print("Su nombre de usuario y su contraseña a sido cambiada exictosamente")
+            print(Usuario)
+            print(Contraseña)
+    else: 
+        print("error")
 
 def Opciones():
     while True:
@@ -129,6 +156,7 @@ def Opciones():
             print("Intentalo De Nuevo")
 
 def Configuracion():
+    Contador=0
     while True:
         try:
             print("-----------------------------------------------------------------------------------------------------------------")
@@ -144,7 +172,7 @@ def Configuracion():
             elif Opciones==3:
                 Temperatura()
             elif Opciones==4:
-                administrador()
+                Administrador()
             elif Opciones==5:
                 return Menu()
         except ValueError:
@@ -157,18 +185,6 @@ def Configuracion():
                 return Menu()
             else:
                 print("")
-def administrador(Admin_Lista):
-    Verificacion=int(input("Confirmar la contraseña actual: "))
-    if Verificacion != Admin_Lista[1]:
-        print("error")
-    elif Verificacion == Admin_Lista[1]:
-        Nueva=input("Ingrese su nueva contraseña: ")
-        if Admin_Lista[1]==Nueva:
-            print("Error")
-        else:
-            Admin_Lista[1]=Nueva
-            print("Su contraseña a sido cambiada exictosamente")
-            print(Admin_Lista)
 
 def Producto():
     Contador=0
