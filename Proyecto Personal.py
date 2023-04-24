@@ -125,6 +125,9 @@ def Opciones():
             print("-----------------------------------------------------------------------------------------------------------------")
 
             Productos = input("Ingrese su producto: ").upper()
+            print("Cargando, Por Favor Espere....")
+            time.sleep(2)
+            system("cls")
 
             if Máquina_Expendedora.get(Productos):
                 print("-----------------------------------------------------------------------------------------------------------------")
