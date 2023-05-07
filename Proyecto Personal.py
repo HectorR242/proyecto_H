@@ -37,7 +37,7 @@ def Menu():
             """)
             print("-----------------------------------------------------------------------------------------------------------------")
             print("""Selecciones Del Menu:
-            ▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅\n\t    █ 1. Opciones      █\n\t    █ 2. Configuracion █\n\t    █ 3. Apagar        █
+            ▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅\n\t    █ 1. Productos      █\n\t    █ 2. Configuracion █\n\t    █ 3. Apagar        █
             ▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅
             """)
             print("""
@@ -82,16 +82,31 @@ def Menu():
 def Verificacion():
     Contador=0
     while True:
-        print("Antes de acceder a la configuración, confirme que es el propietario de la máquina.")
-        Usuario1 = input("Digite su usuario: ")
-        Contraseña1 = int(input("Digite su contraseña: "))
-        if Usuario1 == Usuario["1"] and Contraseña1 == Contraseña["2"]:
-            Configuracion()
-        else:
+        try:
+            print("Antes de acceder a la configuración, confirme que es el propietario de la máquina.")
+            Usuario1 = input("Digite su usuario: ")
+            Contraseña1 = int(input("Digite su contraseña: "))
+            if Usuario1 == Usuario["1"] and Contraseña1 == Contraseña["2"]:
+                Configuracion()
+            else:
+                print("El nombre de usuario o la contraseña son incorrectos")
+                Contador+=1
+                print("Intentos disponibles: 3")
+                print(Contador)
+                time.sleep(3)
+                system("cls")
+                if Contador==3:
+                    print("-----------------------------------------------------------------------------------------------------------------")
+                    return Menu()
+                else:
+                    print("")
+        except ValueError:
             print("El nombre de usuario o la contraseña son incorrectos")
             Contador+=1
             print("Intentos disponibles: 3")
             print(Contador)
+            time.sleep(3)
+            system("cls")
             if Contador==3:
                 print("-----------------------------------------------------------------------------------------------------------------")
                 return Menu()
